@@ -1,0 +1,61 @@
+{
+    "name": "DF_Generic_CSV_to_SQL",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "DelimitedText1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source1"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "DS_SQL_Generic",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink1"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "derivedColumn1"
+                }
+            ],
+            "scriptLines": [
+                "parameters{",
+                "     fileName as string,",
+                "     folderPath as string,",
+                "     sinkTable as string,",
+                "     loadDate as string,",
+                "     dateKey as string",
+                "}",
+                "source(output(",
+                "          customer_id as string,",
+                "          order_id as string,",
+                "          order_date as string,",
+                "          amount as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> source1",
+                "source1 derive(load_date = iif($sinkTable == 'CUST_MSTR' || $sinkTable == 'master_child', toTimestamp($loadDate, 'yyyy-MM-dd'), toTimestamp(null())),",
+                "          date_key = iif($sinkTable == 'master_child', toInteger($dateKey), toInteger(null()))) ~> derivedColumn1",
+                "derivedColumn1 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     deletable:false,",
+                "     insertable:true,",
+                "     updateable:false,",
+                "     upsertable:false,",
+                "     format: 'table',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+            ]
+        }
+    }
+}
