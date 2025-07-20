@@ -1,0 +1,83 @@
+{
+    "name": "PL_Load_CSV_to_SQL_Tables",
+    "properties": {
+        "description": "Loads CSV files from ADLS to Azure SQL dynamically using parameters.",
+        "activities": [
+            {
+                "name": "DF_Generic_Load",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataflow": {
+                        "referenceName": "DF_Generic_CSV_to_SQL",
+                        "type": "DataFlowReference",
+                        "parameters": {
+                            "fileName": {
+                                "value": "'@{pipeline().parameters.fileName}'",
+                                "type": "Expression"
+                            },
+                            "folderPath": {
+                                "value": "'@{pipeline().parameters.folderPath}'",
+                                "type": "Expression"
+                            },
+                            "sinkTable": {
+                                "value": "'@{pipeline().parameters.targetTable}'",
+                                "type": "Expression"
+                            },
+                            "loadDate": {
+                                "value": "'@{pipeline().parameters.loadDate}'",
+                                "type": "Expression"
+                            },
+                            "dateKey": {
+                                "value": "'@{pipeline().parameters.dateKey}'",
+                                "type": "Expression"
+                            }
+                        },
+                        "datasetParameters": {
+                            "source1": {
+                                "folderPath": "@pipeline().parameters.folderPath",
+                                "fileName": "@pipeline().parameters.fileName"
+                            },
+                            "sink1": {
+                                "tableName": "@pipeline().parameters.targetTable"
+                            }
+                        }
+                    },
+                    "compute": {
+                        "coreCount": 8,
+                        "computeType": "General"
+                    },
+                    "traceLevel": "Fine"
+                }
+            }
+        ],
+        "parameters": {
+            "folderPath": {
+                "type": "string"
+            },
+            "fileName": {
+                "type": "string"
+            },
+            "targetTable": {
+                "type": "string"
+            },
+            "loadDate": {
+                "type": "string"
+            },
+            "dateKey": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "lastPublishTime": "2025-07-18T13:38:21Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
