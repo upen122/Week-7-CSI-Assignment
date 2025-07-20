@@ -1,12 +1,48 @@
 {
     "name": "PL_Load_CSV_to_SQL_Tables",
     "properties": {
-        "description": "Loads CSV files from ADLS to Azure SQL dynamically using parameters.",
+        "description": "Pipeline to truncate and load CSV from ADLS to Azure SQL dynamically using parameters.",
         "activities": [
+            {
+                "name": "Truncate_SQL_Table",
+                "type": "SqlServerStoredProcedure",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 1,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "storedProcedureName": "sp_truncate_table",
+                    "storedProcedureParameters": {
+                        "table_name": {
+                            "value": {
+                                "value": "@pipeline().parameters.targetTable",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        }
+                    }
+                },
+                "linkedServiceName": {
+                    "referenceName": "AzureSqlDatabase1",
+                    "type": "LinkedServiceReference"
+                }
+            },
             {
                 "name": "DF_Generic_Load",
                 "type": "ExecuteDataFlow",
-                "dependsOn": [],
+                "dependsOn": [
+                    {
+                        "activity": "Truncate_SQL_Table",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
                 "policy": {
                     "timeout": "0.12:00:00",
                     "retry": 0,
@@ -21,23 +57,23 @@
                         "type": "DataFlowReference",
                         "parameters": {
                             "fileName": {
-                                "value": "'@{pipeline().parameters.fileName}'",
+                                "value": "@pipeline().parameters.fileName",
                                 "type": "Expression"
                             },
                             "folderPath": {
-                                "value": "'@{pipeline().parameters.folderPath}'",
+                                "value": "@pipeline().parameters.folderPath",
                                 "type": "Expression"
                             },
                             "sinkTable": {
-                                "value": "'@{pipeline().parameters.targetTable}'",
+                                "value": "@pipeline().parameters.targetTable",
                                 "type": "Expression"
                             },
                             "loadDate": {
-                                "value": "'@{pipeline().parameters.loadDate}'",
+                                "value": "@pipeline().parameters.loadDate",
                                 "type": "Expression"
                             },
                             "dateKey": {
-                                "value": "'@{pipeline().parameters.dateKey}'",
+                                "value": "@pipeline().parameters.dateKey",
                                 "type": "Expression"
                             }
                         },
@@ -77,7 +113,7 @@
             }
         },
         "annotations": [],
-        "lastPublishTime": "2025-07-18T13:38:21Z"
+        "lastPublishTime": "2025-07-20T09:45:00Z"
     },
     "type": "Microsoft.DataFactory/factories/pipelines"
 }
