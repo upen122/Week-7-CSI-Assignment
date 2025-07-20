@@ -45,7 +45,7 @@ Each file has headers and uses comma (`,`) as a delimiter. Schema is inferred fr
 ### Screenshot of Data Flow Design  
 ---
 
-[!ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/Data_Flow_View.png)
+![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/Data_Flow_View.png)
 
 ---
 
@@ -59,12 +59,12 @@ Each file has headers and uses comma (`,`) as a delimiter. Schema is inferred fr
 
 ### Screenshot of Pipeline Design  
 ---
-[!ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/Pipeline_Output.png)
+![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/Pipeline_Output.png)
 
 ### Screenshot of Pipeline Run Output  
 ---
 
-[!ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/Pipline_run.png)
+![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/Pipline_run.png)
 
 ---
 
