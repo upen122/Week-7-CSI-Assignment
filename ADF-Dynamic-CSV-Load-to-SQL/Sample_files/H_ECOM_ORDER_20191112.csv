@@ -1,0 +1,3 @@
+OrderID,CustomerID,Amount,Status
+5001,101,250.0,Shipped
+5002,103,400.5,Delivered
