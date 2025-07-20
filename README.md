@@ -150,9 +150,9 @@ project/
 
 | Table Name           | Screenshot                      |
 |----------------------|----------------------------------|
-| `CUST_MSTR`          | ![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/CUST_MSTR_Output.png) |
-| `H_ECOM_ORDER`       | ![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/H_ECOM_ORDER_Output.png) |
-| `master_child_export`| ![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/master_child_Output.png) |
+| `CUST_MSTR`          | ![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/sql_output_CUST_MSTR.png) |
+| `H_ECOM_ORDER`       | ![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/sql_output_H_ECOM_ORDER.png) |
+| `master_child_export`| ![ScreenShot](ADF-Dynamic-CSV-Load-to-SQL/ScreenShots/sql_output_master_child.png) |
 
 
 ## Notes
